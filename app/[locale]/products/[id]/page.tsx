@@ -6,13 +6,18 @@ import { getProductById, catalogRepository } from '@/features/catalog';
 import { routing } from '@/i18n/routing';
 
 export async function generateStaticParams() {
-  const products = await catalogRepository.getProducts();
-  return routing.locales.flatMap((locale) =>
-    products.map((product) => ({
-      locale,
-      id: product.id,
-    }))
-  );
+  try {
+    const products = await catalogRepository.getProducts();
+    return routing.locales.flatMap((locale) =>
+      products.map((product) => ({
+        locale,
+        id: product.id,
+      }))
+    );
+  } catch (error) {
+    console.warn('[generateStaticParams] Could not fetch products during build, falling back to dynamic rendering:', error);
+    return [];
+  }
 }
 
 export async function generateMetadata({

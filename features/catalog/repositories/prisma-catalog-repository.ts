@@ -51,34 +51,50 @@ function mapPrismaProductToDomain(record: PrismaProductWithRelations): Product {
 
 export class PrismaCatalogRepository implements CatalogRepository {
   async getProducts(): Promise<Product[]> {
-    const records = await prisma.product.findMany({
-      where: {
-        status: 'ACTIVE',
-      },
-      include: {
-        category: true,
-        translations: true,
-      },
-      orderBy: { id: 'asc' },
-    });
-    return records.map(mapPrismaProductToDomain);
+    try {
+      const records = await prisma.product.findMany({
+        where: {
+          status: 'ACTIVE',
+        },
+        include: {
+          category: true,
+          translations: true,
+        },
+        orderBy: { id: 'asc' },
+      });
+      return records.map(mapPrismaProductToDomain);
+    } catch (err: any) {
+      if (err?.code === 'P2021' || err?.message?.includes('does not exist')) {
+        console.warn('[Catalog] Product table not yet created in database, returning empty catalog');
+        return [];
+      }
+      throw err;
+    }
   }
 
   async getProductById(idOrSlug: ProductId): Promise<Product | undefined> {
-    const record = await prisma.product.findFirst({
-      where: {
-        OR: [
-          { id: idOrSlug },
-          { slug: idOrSlug },
-        ],
-        status: 'ACTIVE',
-      },
-      include: {
-        category: true,
-        translations: true,
-      },
-    });
-    return record ? mapPrismaProductToDomain(record) : undefined;
+    try {
+      const record = await prisma.product.findFirst({
+        where: {
+          OR: [
+            { id: idOrSlug },
+            { slug: idOrSlug },
+          ],
+          status: 'ACTIVE',
+        },
+        include: {
+          category: true,
+          translations: true,
+        },
+      });
+      return record ? mapPrismaProductToDomain(record) : undefined;
+    } catch (err: any) {
+      if (err?.code === 'P2021' || err?.message?.includes('does not exist')) {
+        console.warn('[Catalog] Product table not yet created in database, product not found');
+        return undefined;
+      }
+      throw err;
+    }
   }
 
   async getProductsByCategory(category: string): Promise<Product[]> {
@@ -107,33 +123,41 @@ export class PrismaCatalogRepository implements CatalogRepository {
   }
 
   async getCategories(): Promise<Category[]> {
-    const records = await prisma.category.findMany({
-      where: {
-        status: 'ACTIVE',
-      },
-      include: {
-        translations: true,
-      },
-      orderBy: { name: 'asc' },
-    });
-    return [
-      { id: 'semua', name: DEFAULT_CATEGORY },
-      ...records.map((c) => {
-        const transMap: Record<string, { name: string; description?: string | null }> = {};
-        for (const t of c.translations) {
-          transMap[t.locale] = { name: t.name, description: t.description };
-        }
-        return {
-          id: c.id,
-          name: c.name,
-          slug: c.slug,
-          description: c.description,
-          status: c.status as any,
-          archivedAt: c.archivedAt,
-          translations: transMap,
-        };
-      }),
-    ];
+    try {
+      const records = await prisma.category.findMany({
+        where: {
+          status: 'ACTIVE',
+        },
+        include: {
+          translations: true,
+        },
+        orderBy: { name: 'asc' },
+      });
+      return [
+        { id: 'semua', name: DEFAULT_CATEGORY },
+        ...records.map((c) => {
+          const transMap: Record<string, { name: string; description?: string | null }> = {};
+          for (const t of c.translations) {
+            transMap[t.locale] = { name: t.name, description: t.description };
+          }
+          return {
+            id: c.id,
+            name: c.name,
+            slug: c.slug,
+            description: c.description,
+            status: c.status as any,
+            archivedAt: c.archivedAt,
+            translations: transMap,
+          };
+        }),
+      ];
+    } catch (err: any) {
+      if (err?.code === 'P2021' || err?.message?.includes('does not exist')) {
+        console.warn('[Catalog] Category table not yet created in database, returning default category');
+        return [{ id: 'semua', name: DEFAULT_CATEGORY }];
+      }
+      throw err;
+    }
   }
 }
 
