@@ -102,24 +102,32 @@ export class PrismaCatalogRepository implements CatalogRepository {
     if (!normalized || normalized === 'semua') {
       return this.getProducts();
     }
-    const records = await prisma.product.findMany({
-      where: {
-        status: 'ACTIVE',
-        category: {
-          OR: [
-            { id: { equals: normalized, mode: 'insensitive' } },
-            { slug: { equals: normalized, mode: 'insensitive' } },
-            { name: { equals: category.trim(), mode: 'insensitive' } },
-          ],
+    try {
+      const records = await prisma.product.findMany({
+        where: {
+          status: 'ACTIVE',
+          category: {
+            OR: [
+              { id: { equals: normalized, mode: 'insensitive' } },
+              { slug: { equals: normalized, mode: 'insensitive' } },
+              { name: { equals: category.trim(), mode: 'insensitive' } },
+            ],
+          },
         },
-      },
-      include: {
-        category: true,
-        translations: true,
-      },
-      orderBy: { id: 'asc' },
-    });
-    return records.map(mapPrismaProductToDomain);
+        include: {
+          category: true,
+          translations: true,
+        },
+        orderBy: { id: 'asc' },
+      });
+      return records.map(mapPrismaProductToDomain);
+    } catch (err: any) {
+      if (err?.code === 'P2021' || err?.message?.includes('does not exist')) {
+        console.warn('[Catalog] Product table not yet created in database, returning empty catalog');
+        return [];
+      }
+      throw err;
+    }
   }
 
   async getCategories(): Promise<Category[]> {
