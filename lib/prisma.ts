@@ -19,6 +19,6 @@ export const prisma =
     },
   });
 
-if (process.env.NODE_ENV !== 'production') {
-  globalForPrisma.prisma = prisma;
-}
+// Persist client across invocations in both development and serverless production containers
+globalForPrisma.prisma = prisma;
+
