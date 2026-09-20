@@ -1,6 +1,9 @@
-import type { Product } from '../domain/product';
+import fs from 'fs';
+import path from 'path';
+import type { Product } from '../features/catalog/domain/product';
 
-export const mockProducts: Product[] = [
+// We will construct the 54 comprehensive Asian Mart products
+export const fullCatalog: Product[] = [
   // --------------------------------------------------------------------------
   // CATEGORY 1: Daging & Unggas (Meat & Poultry)
   // --------------------------------------------------------------------------
@@ -1113,3 +1116,5 @@ export const mockProducts: Product[] = [
     },
   },
 ];
+
+console.log(`Generated full catalog with ${fullCatalog.length} products!`);
