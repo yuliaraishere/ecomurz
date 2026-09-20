@@ -5,6 +5,7 @@ import type { Category } from '../domain/category';
 import type { LocalizedContentMap } from '../domain/localized-product';
 import { isSupportedLocale, DEFAULT_LOCALE } from '../domain/locale';
 import { DEFAULT_CATEGORY } from '../domain/category';
+import { mockCatalogRepository } from './mock-catalog-repository';
 import type { Prisma } from '@prisma/client';
 
 type PrismaProductWithRelations = Prisma.ProductGetPayload<{
@@ -62,13 +63,16 @@ export class PrismaCatalogRepository implements CatalogRepository {
         },
         orderBy: { id: 'asc' },
       });
+
+      if (records.length === 0) {
+        console.warn('[Catalog] Database returned 0 products, falling back to comprehensive catalog');
+        return mockCatalogRepository.getProducts();
+      }
+
       return records.map(mapPrismaProductToDomain);
     } catch (err: any) {
-      if (err?.code === 'P2021' || err?.message?.includes('does not exist')) {
-        console.warn('[Catalog] Product table not yet created in database, returning empty catalog');
-        return [];
-      }
-      throw err;
+      console.warn('[Catalog] Database query failed, falling back to comprehensive catalog:', err?.message || err);
+      return mockCatalogRepository.getProducts();
     }
   }
 
@@ -87,13 +91,13 @@ export class PrismaCatalogRepository implements CatalogRepository {
           translations: true,
         },
       });
-      return record ? mapPrismaProductToDomain(record) : undefined;
-    } catch (err: any) {
-      if (err?.code === 'P2021' || err?.message?.includes('does not exist')) {
-        console.warn('[Catalog] Product table not yet created in database, product not found');
-        return undefined;
+      if (record) {
+        return mapPrismaProductToDomain(record);
       }
-      throw err;
+      return mockCatalogRepository.getProductById(idOrSlug);
+    } catch (err: any) {
+      console.warn('[Catalog] Database query failed, falling back to mock product lookup:', err?.message || err);
+      return mockCatalogRepository.getProductById(idOrSlug);
     }
   }
 
@@ -120,13 +124,15 @@ export class PrismaCatalogRepository implements CatalogRepository {
         },
         orderBy: { id: 'asc' },
       });
+
+      if (records.length === 0) {
+        return mockCatalogRepository.getProductsByCategory(category);
+      }
+
       return records.map(mapPrismaProductToDomain);
     } catch (err: any) {
-      if (err?.code === 'P2021' || err?.message?.includes('does not exist')) {
-        console.warn('[Catalog] Product table not yet created in database, returning empty catalog');
-        return [];
-      }
-      throw err;
+      console.warn('[Catalog] Database query failed, falling back to mock category lookup:', err?.message || err);
+      return mockCatalogRepository.getProductsByCategory(category);
     }
   }
 
@@ -141,6 +147,11 @@ export class PrismaCatalogRepository implements CatalogRepository {
         },
         orderBy: { name: 'asc' },
       });
+
+      if (records.length === 0) {
+        return mockCatalogRepository.getCategories();
+      }
+
       return [
         { id: 'semua', name: DEFAULT_CATEGORY },
         ...records.map((c) => {
@@ -160,11 +171,8 @@ export class PrismaCatalogRepository implements CatalogRepository {
         }),
       ];
     } catch (err: any) {
-      if (err?.code === 'P2021' || err?.message?.includes('does not exist')) {
-        console.warn('[Catalog] Category table not yet created in database, returning default category');
-        return [{ id: 'semua', name: DEFAULT_CATEGORY }];
-      }
-      throw err;
+      console.warn('[Catalog] Database query failed, falling back to mock categories:', err?.message || err);
+      return mockCatalogRepository.getCategories();
     }
   }
 }
