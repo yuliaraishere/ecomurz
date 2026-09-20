@@ -118,10 +118,12 @@
   "Categories": {
     "all": "Lahat",
     "daging & unggas": "Karne at Manok",
+    "makanan laut": "Pagkain sa Dagat",
     "sayuran segar": "Sariwang Gulay",
-    "bumbu & rempah": "Pampalasa at Rekado",
-    "bahan pokok": "Pangunahing Sangkap",
+    "bumbu dapur": "Pampalasa at Rekado",
+    "saus & kecap": "Sarsa at Pampalasa",
     "mie & pasta": "Noodles at Pasta",
+    "beras & serealia": "Bigas at Butil",
     "makanan ringan": "Meryenda at Biskwit"
   },
   "Auth": {

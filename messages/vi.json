@@ -118,10 +118,12 @@
   "Categories": {
     "all": "Tất cả",
     "daging & unggas": "Thịt & Gia Cầm",
+    "makanan laut": "Hải Sản",
     "sayuran segar": "Rau Củ Tươi",
-    "bumbu & rempah": "Gia Vị & Thảo Mộc",
-    "bahan pokok": "Thực Phẩm Thiết Yếu",
+    "bumbu dapur": "Gia Vị & Hương Liệu",
+    "saus & kecap": "Sốt & Gia Vị",
     "mie & pasta": "Mì & Bún Phở",
+    "beras & serealia": "Gạo & Ngũ Cốc",
     "makanan ringan": "Bánh Kẹo & Đồ Ăn Vặt"
   },
   "Auth": {

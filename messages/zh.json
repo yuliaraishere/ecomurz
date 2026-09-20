@@ -117,12 +117,14 @@
   },
   "Categories": {
     "all": "全部",
-    "daging & unggas": "生鲜肉禽",
-    "sayuran segar": "时令生鲜蔬菜",
-    "bumbu & rempah": "地道香辛料调味",
-    "bahan pokok": "亚洲粮油干货",
-    "mie & pasta": "面食与面条",
-    "makanan ringan": "休闲零食与饼干"
+    "daging & unggas": "肉类与禽类",
+    "makanan laut": "海鲜水产",
+    "sayuran segar": "新鲜蔬菜",
+    "bumbu dapur": "香料与调味料",
+    "saus & kecap": "酱料与调味品",
+    "mie & pasta": "面条与米线",
+    "beras & serealia": "大米与谷物",
+    "makanan ringan": "零食与饼干"
   },
   "Auth": {
     "signIn": "登录",

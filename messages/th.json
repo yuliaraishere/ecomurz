@@ -118,10 +118,12 @@
   "Categories": {
     "all": "ทั้งหมด",
     "daging & unggas": "เนื้อสัตว์และสัตว์ปีก",
+    "makanan laut": "อาหารทะเล",
     "sayuran segar": "ผักสด",
-    "bumbu & rempah": "เครื่องเทศและเครื่องปรุง",
-    "bahan pokok": "วัตถุดิบและของแห้ง",
+    "bumbu dapur": "เครื่องเทศและเครื่องปรุง",
+    "saus & kecap": "ซอสและเครื่องปรุง",
     "mie & pasta": "บะหมี่และพาสต้า",
+    "beras & serealia": "ข้าวและธัญพืช",
     "makanan ringan": "ขนมขบเคี้ยวและบิสกิต"
   },
   "Auth": {

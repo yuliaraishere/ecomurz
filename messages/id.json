@@ -118,10 +118,12 @@
   "Categories": {
     "all": "Semua",
     "daging & unggas": "Daging & Unggas",
+    "makanan laut": "Makanan Laut",
     "sayuran segar": "Sayuran Segar",
-    "bumbu & rempah": "Bumbu & Rempah",
-    "bahan pokok": "Bahan Pokok",
+    "bumbu dapur": "Bumbu Dapur",
+    "saus & kecap": "Saus & Kecap",
     "mie & pasta": "Mie & Pasta",
+    "beras & serealia": "Beras & Serealia",
     "makanan ringan": "Makanan Ringan & Biskuit"
   },
   "Auth": {

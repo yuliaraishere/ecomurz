@@ -118,10 +118,12 @@
   "Categories": {
     "all": "すべて",
     "daging & unggas": "肉・家禽",
+    "makanan laut": "魚介類・海鮮",
     "sayuran segar": "新鮮野菜",
-    "bumbu & rempah": "調味料・スパイス",
-    "bahan pokok": "基礎食材・乾物",
+    "bumbu dapur": "スパイス・調味料",
+    "saus & kecap": "ソース・醤油類",
     "mie & pasta": "麺類・パスタ",
+    "beras & serealia": "お米・穀物",
     "makanan ringan": "スナック・菓子"
   },
   "Auth": {

@@ -118,10 +118,12 @@
   "Categories": {
     "all": "All",
     "daging & unggas": "Meat & Poultry",
+    "makanan laut": "Seafood",
     "sayuran segar": "Fresh Vegetables",
-    "bumbu & rempah": "Spices & Seasonings",
-    "bahan pokok": "Pantry & Staples",
+    "bumbu dapur": "Spices & Seasonings",
+    "saus & kecap": "Sauces & Condiments",
     "mie & pasta": "Noodles & Pasta",
+    "beras & serealia": "Rice, Grains & Staples",
     "makanan ringan": "Snacks & Biscuits"
   },
   "Auth": {

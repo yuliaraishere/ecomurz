@@ -117,11 +117,13 @@
   },
   "Categories": {
     "all": "सभी",
-    "daging & unggas": "मांस और पोल्ट्री",
-    "sayuran segar": "ताज़ी सब्जियाँ",
-    "bumbu & rempah": "मसाले और सीज़निंग",
-    "bahan pokok": "मुख्य खाद्य सामग्री",
+    "daging & unggas": "मांस और मुर्गी",
+    "makanan laut": "समुद्री भोजन",
+    "sayuran segar": "ताज़ी सब्जियां",
+    "bumbu dapur": "मसाले और सीज़निंग",
+    "saus & kecap": "सॉस और मसाले",
     "mie & pasta": "नूडल्स और पास्ता",
+    "beras & serealia": "चावल और अनाज",
     "makanan ringan": "स्नैक्स और बिस्कुट"
   },
   "Auth": {
